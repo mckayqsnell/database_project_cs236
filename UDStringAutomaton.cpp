@@ -17,7 +17,7 @@ void UDStringAutomaton::S1(const std::string &input) {
         index++;
         S1(input);
     }
-    else if(index == input.size()-1)
+    else if((unsigned int)index == input.size()-1)
     {
         S2(input);
     }

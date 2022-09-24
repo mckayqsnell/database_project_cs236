@@ -30,10 +30,10 @@ Lexer::Lexer() {
 }
 
 Lexer::~Lexer() {
-    for(auto item : automata)
+    /*for(auto item : automata)
     {
         delete item;
-    }
+    }*/
     automata.clear(); //might need to delete with a for loop before clear????
 }
 
@@ -98,7 +98,7 @@ void Lexer::Run(std::string& input) {
         {
             //cout << "I got a token --> ";
             string tk;
-            for(unsigned int i = 0; i < maxRead; i++)
+            for(int i = 0; i < maxRead; i++)
             {
                tk += input[i];
             }
