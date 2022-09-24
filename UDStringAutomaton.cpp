@@ -11,7 +11,7 @@ void UDStringAutomaton::S0(const std::string& input) {
 }
 
 void UDStringAutomaton::S1(const std::string &input) {
-    if(input[index] != '\'' && index != input.size()-1 )
+    if(input[index] != '\'' && (unsigned int)index != input.size()-1 )
     {
         inputRead++;
         index++;

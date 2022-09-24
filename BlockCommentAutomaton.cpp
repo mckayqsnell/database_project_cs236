@@ -38,7 +38,7 @@ void BlockCommentAutomaton::S2(const std::string& input) {
         index++;
         S2(input);
     }
-    else if(index == input.size()-1)
+    else if((unsigned int)index == input.size()-1)
     {
         Serr();
     } //FIXME might need to add an else if statement saying if you see a # then go to an error state

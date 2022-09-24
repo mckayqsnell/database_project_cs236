@@ -34,7 +34,7 @@ void UDBlockCommentAutomaton::S2(const std::string& input) {
         index++;
         S3(input);
     }
-    else if(index == input.size()-1)
+    else if((unsigned int)index == input.size()-1)
     {
         inputRead++;
         index++;
@@ -46,13 +46,13 @@ void UDBlockCommentAutomaton::S2(const std::string& input) {
 }
 
 void UDBlockCommentAutomaton::S3(const std::string& input) {
-    if(input[index] != '|' && input[index] != '#' && index != input.size()-1)
+    if(input[index] != '|' && input[index] != '#' && (unsigned int)index != input.size()-1)
     {
         inputRead++;
         index++;
         S3(input);
     }
-    else if(index == input.size()-1)
+    else if((unsigned int)index == input.size()-1)
     {
         S4(input);
     }

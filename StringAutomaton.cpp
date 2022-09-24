@@ -11,7 +11,7 @@ void StringAutomaton::S0(const std::string& input) {
     }
 }
 void StringAutomaton::S1(const std::string& input) {
-    if(index == input.size()-1)
+    if((unsigned int)index == input.size()-1)
     {
         if(input[index] != '\'')
         {
