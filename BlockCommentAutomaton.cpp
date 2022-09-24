@@ -32,7 +32,7 @@ void BlockCommentAutomaton::S2(const std::string& input) {
         index++;
         S3(input);
     }
-    else if(input[index] != '|' &&  index!= input.size()-1)
+    else if(input[index] != '|' &&  (unsigned int)index!= input.size()-1)
     {
         inputRead++;
         index++;
