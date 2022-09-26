@@ -40,10 +40,10 @@ string Token::typeToString()
         case TokenType::LINECOMMENT: return "COMMENT";
         case TokenType::EndOfFile: return "EOF";
         case TokenType::ID: return "ID";
-        case TokenType::BLOCKCOMMENT: return "BLOCKCOMMENT";
+        case TokenType::BLOCKCOMMENT: return "COMMENT";
         case TokenType::STRING: return "STRING";
-        case TokenType::UD_STRING: return  "UNDEFINED_STRING";
-        case TokenType::UD_BLOCK_C: return "UNDEFINED_BLOCK";
+        case TokenType::UD_STRING: return  "UNDEFINED";
+        case TokenType::UD_BLOCK_C: return "UNDEFINED";
     }
     return "Error"; // a string MUST be returned by the end
 }

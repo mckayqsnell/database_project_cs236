@@ -10,20 +10,40 @@ void LineCommentAutomaton::S0(const std::string& input) {
         Serr();
     }
 }
-
 void LineCommentAutomaton::S1(const std::string& input) {
-    if(input[index] != '\n' && input[index] != '|')
+        if(input[index] != '\n' && input[index] != '|')
+        {
+            inputRead++;
+            index++;
+            S2(input);
+        }
+        else if(input[index] == '\n')
+        {
+            S3(input);
+        }
+        else {
+            Serr();
+        }
+}
+void LineCommentAutomaton::S2(const std::string& input) {
+    if(input[index] != '\n')
     {
         inputRead++;
         index++;
-        S1(input);
+        S2(input);
     }
     else if(input[index] == '\n')
     {
-       return;
+        //inputRead++;
+        //index++;
+        S3(input);
     }
-    else
-    {
+    else {
         Serr();
     }
+}
+
+
+void LineCommentAutomaton::S3(const std::string& input) {
+   return;
 }
