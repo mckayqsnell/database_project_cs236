@@ -182,5 +182,5 @@ void Lexer::Run(std::string& input) {
     {
         cout << token->toString() << endl;
     }
-    cout <<"Total Tokens = " << tokens.size();
+    cout <<"Total Tokens = " << tokens.size(); //might need a endl??
 }
