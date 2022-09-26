@@ -24,6 +24,10 @@ void UDBlockCommentAutomaton::S1(const std::string& input) {
 void UDBlockCommentAutomaton::S2(const std::string& input) {
     if(input[index] != '|' && (unsigned int)index <= input.size()-1 )
     {
+        if(input[index] == '\n')
+        {
+            ++newLines;
+        }
         inputRead++;
         index++;
         S2(input);
@@ -48,6 +52,10 @@ void UDBlockCommentAutomaton::S2(const std::string& input) {
 void UDBlockCommentAutomaton::S3(const std::string& input) {
     if((unsigned int)index <= input.size()-1 && input[index] != '|' && input[index] != '#') //FIXME : might have to switch it back.
     {
+        if(input[index] == '\n')
+        {
+            ++newLines;
+        }
         inputRead++;
         index++;
         S2(input);
