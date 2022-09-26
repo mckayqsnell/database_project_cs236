@@ -42,7 +42,7 @@ string Token::typeToString()
         case TokenType::ID: return "ID";
         case TokenType::BLOCKCOMMENT: return "BLOCKCOMMENT";
         case TokenType::STRING: return "STRING";
-        case TokenType::UD_STRING: return  "UNDEFINED";
+        case TokenType::UD_STRING: return  "UNDEFINED_STRING";
         case TokenType::UD_BLOCK_C: return "UNDEFINED_BLOCK";
     }
     return "Error"; // a string MUST be returned by the end

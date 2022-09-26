@@ -1,4 +1,8 @@
 #include "StringAutomaton.h"
+#include <iostream>
+
+using namespace std;
+
 // TODO:NEED ERROR STATE. IF IT HITS END OF STRING THATS A FAIL STATE.
 void StringAutomaton::S0(const std::string& input) {
     if (input[index] == '\'') {
@@ -11,24 +15,29 @@ void StringAutomaton::S0(const std::string& input) {
     }
 }
 void StringAutomaton::S1(const std::string& input) {
-    if((unsigned int)index == input.size()-1)
+    //cout << "String S1: " << input[index] << endl;
+    if((unsigned int)index <= input.size()-1 && input[index] != '\'')
     {
-        if(input[index] != '\'')
+        //cout << "String S1: I didn't read a single quote" << endl;
+        if(input[index] == '\n')
         {
-            Serr();
+            ++newLines;
         }
-    }
-    else if(input[index] != '\'' )
-    {
         inputRead++;
         index++;
         S1(input);
     }
     else if(input[index] == '\'')
     {
+        //cout << "String S1: I did read a single quote" << endl;
         inputRead++;
         index++;
-        S2(input); //FIXME might need to increment inputRead and index
+        S2(input);
+    }
+    else if((unsigned int)index == input.size()-1 && input[index] != '\'')
+    {
+        //cout << "String S1: I have reached the end of the string" << endl;
+        Serr();
     }
     else {
         Serr();
@@ -36,13 +45,24 @@ void StringAutomaton::S1(const std::string& input) {
 }
 
 void StringAutomaton::S2(const std::string& input) {
-    if(input[index] == '\'')
+    //cout << "String S2: "<< input[index] << endl;
+    if(input[index] != '\'')
     {
+        //cout << "String S2: accepted string" << endl;
+        //inputRead++;
+        return;
+    }
+    else if(input[index] == '\'')
+    {
+        //cout << "String S2: read single quote" << endl;
        inputRead++;
        index++;
        S1(input);
     }
+    else {
+        Serr();
+    }
     //else {
-       // inputRead++;
+       //inputRead++;
     //}
 }

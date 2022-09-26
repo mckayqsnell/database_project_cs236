@@ -22,7 +22,7 @@ void UDBlockCommentAutomaton::S1(const std::string& input) {
 }
 
 void UDBlockCommentAutomaton::S2(const std::string& input) {
-    if(input[index] != '|' && (unsigned int)index != input.size()-1 )
+    if(input[index] != '|' && (unsigned int)index <= input.size()-1 )
     {
         inputRead++;
         index++;
@@ -34,7 +34,7 @@ void UDBlockCommentAutomaton::S2(const std::string& input) {
         index++;
         S3(input);
     }
-    else if((unsigned int)index == input.size()-1)
+    else if((unsigned int)index >= input.size()-1)
     {
         inputRead++;
         index++;
@@ -46,13 +46,23 @@ void UDBlockCommentAutomaton::S2(const std::string& input) {
 }
 
 void UDBlockCommentAutomaton::S3(const std::string& input) {
-    if(input[index] != '|' && input[index] != '#' && (unsigned int)index != input.size()-1)
+    if((unsigned int)index <= input.size()-1 && input[index] != '|' && input[index] != '#') //FIXME : might have to switch it back.
+    {
+        inputRead++;
+        index++;
+        S2(input);
+    }
+    else if(input[index] == '|')
     {
         inputRead++;
         index++;
         S3(input);
     }
-    else if((unsigned int)index == input.size()-1)
+    else if(input[index] == '#')
+    {
+        Serr();
+    }
+    else if((unsigned int)index >= input.size()-1)
     {
         S4(input);
     }
@@ -62,7 +72,5 @@ void UDBlockCommentAutomaton::S3(const std::string& input) {
 }
 
 void UDBlockCommentAutomaton::S4(const std::string& input){
-    inputRead++;
-    index++;
     return;
 }

@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
         inputString += ch;
     }
 
-    cout << "FiletoString: " << inputString << endl;
+    //cout << "FiletoString: " << inputString << endl;
     lexer->Run(inputString);
 
     delete lexer;
