@@ -21,9 +21,8 @@ public:
     ~Lexer();
 
     void Run(std::string& input);
-
-    // TODO: add other public methods here
-    // TODO: add totalTokens method
+    vector<Token*> getTokens();
+    // TODO: Add TotalTokens Method
 };
 
 #endif // LEXER_H

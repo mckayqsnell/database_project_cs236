@@ -21,7 +21,6 @@
 #include "UDStringAutomaton.h"
 #include "UDBlockCommentAutomaton.h"
 #include <iostream>
-#include <ctype.h>
 
 using namespace std;
 
@@ -61,7 +60,6 @@ void Lexer::CreateAutomata() {
 }
 
 void Lexer::Run(std::string& input) {
-    // TODO: count up how many total tokens there are by the end
     int lineNumber = 1;
     while (input.size() > 0)
     {
@@ -121,12 +119,9 @@ void Lexer::Run(std::string& input) {
             string unDefinedString;
             unDefinedString = input[0];
             Automaton* unDefined = new UndefinedAutomaton();
-            //unDefined->Start(input);
             Token* unDefinedToken = unDefined->CreateToken(unDefinedString, lineNumber);
             lineNumber += maxAutomaton->NewLinesRead();
             tokens.push_back(unDefinedToken);
-            //cout << unDefinedToken->toString() << endl; //FIXME
-            //cout << "UNDEFINED: " << unDefinedToken << endl;
         }
 
         input.erase(0,maxRead); //update input - remove those characters
@@ -139,48 +134,15 @@ void Lexer::Run(std::string& input) {
         Token* eof_token = EndOfFile->CreateToken(eof,lineNumber);
         lineNumber += EOFAutomaton->NewLinesRead();
         tokens.push_back(eof_token);
-        //cout << eof_token->toString() << endl;
-        //cout <<"Total Tokens = " << tokens.size();
     }
-    /*
-    set lineNumber to 1
-    // While there are more characters to tokenize
-    loop while input.size() > 0 {
-        set maxRead to 0
-        set maxAutomaton to the first automaton in automata
-
-
-        // Here is the "Parallel" part of the algorithm
-        //   Each automaton runs with the same input
-        foreach automaton in automata {
-            inputRead = automaton.Start(input)
-            if (inputRead > maxRead) {
-                set maxRead to inputRead
-                set maxAutomaton to automaton
-            }
-        }
-        // Here is the "Max" part of the algorithm
-        if maxRead > 0 {
-            set newToken to maxAutomaton.CreateToken(...)
-                increment lineNumber by maxAutomaton.NewLinesRead()
-                add newToken to collection of all tokens
-        }
-        // No automaton accepted input
-        // Create single character undefined token
-        else {
-            set maxRead to 1
-                set newToken to a  new undefined Token
-                (with first character of input)
-                add newToken to collection of all tokens
-        }
-        // Update `input` by removing characters read to create Token
-        remove maxRead characters from input
-    }
-    add end of file token to all tokens
-    */
-    for(auto token: tokens)
+    /*for(auto token: tokens)
     {
         cout << token->toString() << endl;
     }
-    cout <<"Total Tokens = " << tokens.size(); //might need a endl??
+    cout <<"Total Tokens = " << tokens.size(); */
+
+}
+
+vector<Token*> Lexer::getTokens() {
+    return tokens;
 }

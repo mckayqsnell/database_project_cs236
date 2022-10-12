@@ -42,7 +42,7 @@ private:
 public:
     Token(TokenType type, string description, int line);
     string toString();
-    // TODO: add other needed methods
+    TokenType getType();
 };
 
 #endif // TOKEN_H

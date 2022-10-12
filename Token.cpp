@@ -47,3 +47,8 @@ string Token::typeToString()
     }
     return "Error"; // a string MUST be returned by the end
 }
+
+TokenType Token::getType()
+{
+    return token_type;
+}
