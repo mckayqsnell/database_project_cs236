@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include "Parser.h"
 #include <iostream>
 #include <fstream>
 
@@ -31,8 +32,11 @@ int main(int argc, char** argv) {
 
     //cout << "FiletoString: " << inputString << endl;
     lexer->Run(inputString);
+    Parser* parser = new Parser(lexer->getTokens());
+    parser->parse();
 
     delete lexer;
+    delete parser;
 
     return 0;
 }
