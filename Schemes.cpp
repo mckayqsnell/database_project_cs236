@@ -8,7 +8,7 @@ using namespace std;
 
 Schemes::Schemes()
 {
-    this->tmp = "hi";
+    num_Schemes = 0;
 }
 
 Schemes::~Schemes()
@@ -19,7 +19,17 @@ Schemes::~Schemes()
 string Schemes::toString()
 {
    stringstream ss;
-   ss << tmp << " this is scheme number: " << num_Schemes << endl;
+   //ss << tmp << " this is scheme number: " << num_Schemes << " - " << getName() << endl;
+   ss << getName() << "(";
+   vector<string> idl = getIDList();
+   for(unsigned int i = 0; i < idl.size(); i++)
+   {
+       ss << idl.at(i);
+       if(i < idl.size()-1) {
+           ss << ",";
+       }
+   }
+   ss << ")" << endl;
    return ss.str();
 }
 

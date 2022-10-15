@@ -3,12 +3,12 @@
 
 #include <string>
 #include <vector>
+#include "Stuff.h"
 
 using namespace std;
 
-class Schemes {
+class Schemes: public Stuff {
 private:
-    string tmp;
     int num_Schemes;
 public:
     Schemes();

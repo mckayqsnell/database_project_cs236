@@ -43,6 +43,7 @@ public:
     Token(TokenType type, string description, int line);
     string toString();
     TokenType getType();
+    string getOutput();
 };
 
 #endif // TOKEN_H

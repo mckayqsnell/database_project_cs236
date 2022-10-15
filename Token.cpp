@@ -52,3 +52,8 @@ TokenType Token::getType()
 {
     return token_type;
 }
+
+string Token::getOutput()
+{
+    return output;
+}

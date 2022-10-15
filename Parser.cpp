@@ -4,54 +4,124 @@
 #include <vector>
 
 using namespace std;
-//TODO: ask dad about github branches and how they work. Can I upload this to a different branch so that I can
-//maintain version control? So if I change anything in past projects on accident I can always have the original stored there.
 
 Parser::Parser(vector<Token*> tokens_)
 {
     this->pass = false;
-    this->tokens = tokens_;
+    this->tokensToParse = tokens_;
     this->position = 0;
     this->numSchemes = 0;
+    this->numFacts = 0;
+    this->numQueries = 0;
+    this->numRules = 0;
 
-    for(unsigned int i = 0; i < this->tokens.size(); i++)
+/*
+    for(auto & i : tokensToParse)
     {
-        //Erase/ignore line comments
-        if(this->tokens.at(i)->getType() == TokenType::LINECOMMENT)
-        {
-            this->tokens.erase(this->tokens.begin()+i);
-        }
-        //Erase/ignore block comments
-        if(this->tokens.at(i)->getType() == TokenType::BLOCKCOMMENT)
-        {
-            this->tokens.erase(this->tokens.begin()+i);
-        }
-        //cout << tokens.at(i)->toString() << endl;
+        cout << i->toString() << endl;
     }
-    //cout <<"Total Tokens = " << tokens.size();
+*/
+
+    auto it = tokensToParse.begin();
+    while(it != tokensToParse.end())
+    {
+        if ((*it)->getType() == TokenType::LINECOMMENT)
+        {
+            it = tokensToParse.erase(it);
+        }
+        else if ((*it)->getType() == TokenType::BLOCKCOMMENT)
+        {
+            it = tokensToParse.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 
 }
 
 Parser::~Parser()
 {
+    for(auto & scheme : schemesList)
+    {
+        delete scheme;
+    }
 
+    for(auto & fact : factList)
+    {
+        delete fact;
+    }
+
+    for(auto & query : queryList)
+    {
+        delete query;
+    }
+    //Todo: Delete fact and any other allocations for classes here
 }
 
 string Parser::toString()
 {
     stringstream ss;
-    for(unsigned int i = 0; i < schemesList.size(); ++i)
+
+    //Schemes
+    ss << "Schemes(" << schemesList.size() << ")" << ":" << endl;
+    for(auto & i : schemesList)
     {
-        ss << schemesList.at(i)->toString() << endl;
+        ss << "  " << i->toString();
     }
+
+    //Facts
+    ss << "Facts(" << factList.size() << ")" << ":" << endl;
+    for(auto & i : factList)
+    {
+        ss << "  " << i->toString();
+    }
+
+    //TODO:Rules
+
+    //Predicates
+    ss << "Rules(" << rulesList.size() << ")" << ":" << endl;
+    for(auto & i : rulesList)
+    {
+        ss << "  " << i->toString() << endl;
+    }
+
+    //Queries
+    ss << "Queries(" << queryList.size() << ")" << ":" << endl;
+    for(auto & i : queryList)
+    {
+        ss << "  " << i->toString();
+    }
+
+    //Domain
+    ss << "Domain(" << domain.size() << ")" << ":" << endl;
+    for(const auto & it : domain)
+    {
+        ss << "  " << it << endl;
+    }
+
     return ss.str();
+}
+
+void Parser::setDomain(vector<string> string_list)
+{
+    for(auto & i : string_list)
+    {
+        domain.insert(i);
+    }
+}
+
+set<string> Parser::getDomain()
+{
+    return domain;
 }
 
 void Parser::parse()
 {
-    if(parseDatalogProgram()) //TODO: try and catch it just doesn't know how to deal with it
+    if(parseDatalogProgram())
     {
-        cout << "Successful! last token was: " << tokens.at(position)->toString() << endl;
+        cout << "Success!" << endl;
         cout << toString();
     }
 }
@@ -59,90 +129,88 @@ void Parser::parse()
 bool Parser::parseDatalogProgram()
 {
     try {
-        if(tokens.at(position)->getType() == TokenType::SCHEMES)
+        if(tokensToParse.at(position)->getType() == TokenType::SCHEMES)
         {
             ++position;
-            if(tokens.at(position)->getType() == TokenType::COLON)
+            if(tokensToParse.at(position)->getType() == TokenType::COLON)
             {
                 ++position;
                 parseScheme();
                 parseSchemeList();
-                if(tokens.at(position)->getType() == TokenType::FACTS)
+                if(tokensToParse.at(position)->getType() == TokenType::FACTS)
                 {
                     ++position;
-                    if(tokens.at(position)->getType() == TokenType::COLON)
+                    if(tokensToParse.at(position)->getType() == TokenType::COLON)
                     {
                         ++position;
                         parseFactList();
-                        if(tokens.at(position)->getType() == TokenType::RULES)
+                        if(tokensToParse.at(position)->getType() == TokenType::RULES)
                         {
                             ++position;
-                            if(tokens.at(position)->getType() == TokenType::COLON)
+                            if(tokensToParse.at(position)->getType() == TokenType::COLON)
                             {
                                 ++position;
                                 parseRuleList();
-                                if(tokens.at(position)->getType() == TokenType::QUERIES)
+                                if(tokensToParse.at(position)->getType() == TokenType::QUERIES)
                                 {
                                     ++position;
-                                    if(tokens.at(position)->getType() == TokenType::COLON)
+                                    if(tokensToParse.at(position)->getType() == TokenType::COLON)
                                     {
                                         ++position;
                                         parseQuery();
                                         //cout << "Current token is: " << tokens.at(position)->toString() << endl;
                                         parseQueryList();
-                                        if(tokens.at(position)->getType() == TokenType::EndOfFile)
+                                        if(tokensToParse.at(position)->getType() == TokenType::EndOfFile)
                                         {
                                             pass = true;
                                             return pass;
                                         }
                                         else
                                         {
-                                            throw tokens.at(position);
+                                            throw tokensToParse.at(position);
                                         }
                                     }
                                     else
                                     {
-                                        throw tokens.at(position);
+                                        throw tokensToParse.at(position);
                                     }
                                 }
                                 else
                                 {
-                                    throw tokens.at(position);
+                                    throw tokensToParse.at(position);
                                 }
                             }
                             else
                             {
-                                throw tokens.at(position);
+                                throw tokensToParse.at(position);
                             }
                         }
                         else
                         {
-                            throw tokens.at(position);
+                            throw tokensToParse.at(position);
                         }
                     }
                 }
                 else
                 {
-                    throw tokens.at(position);
+                    throw tokensToParse.at(position);
                 }
             }
             else
             {
-                throw tokens.at(position);
+                throw tokensToParse.at(position);
             }
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
-        cout << "Successful! last token was: " << tokens.at(position)->toString() << endl;
-        cout << toString();
     }
     catch (Token* error)
     {
         pass = false;
         cout << "Failure!" << endl;
-        cout << "\t" << error->toString() << endl;
+        cout << "   " << error->toString() << endl;
         return pass;
     }
 
@@ -153,61 +221,69 @@ void Parser::parseScheme()
 {
     Schemes* schemes = new Schemes();
 
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
+        // put id in schemes name
+        schemes->setName(tokensToParse.at(position)->getOutput());
         //cout << "token at posistion: " << position << " is a " << tokens.at(position)->toString() << endl;
         ++position;
 
-        if(tokens.at(position)->getType() == TokenType::LEFT_PAREN)
+        if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
         {
             ++position;
 
-            if(tokens.at(position)->getType() == TokenType::ID)
+            if(tokensToParse.at(position)->getType() == TokenType::ID)
             {
+                // put the ID in schemes
+                //cerr << "Parsing " << tokensToParse.at(position)->getOutput() << endl;
+                schemes->addID(tokensToParse.at(position)->getOutput());
                 ++position;
-                parseIDList();
-                if(tokens.at(position)->getType() == TokenType::RIGHT_PAREN)
+                parseIDList(schemes);
+                if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
                 {
                     ++numSchemes;
                     ++position;
                 }
                 else
                 {
-                    throw tokens.at(position);
+                    throw tokensToParse.at(position);
                 }
             }
             else
             {
-                throw tokens.at(position);
+                throw tokensToParse.at(position);
             }
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
     schemes->setNumSchemes(numSchemes);
     schemesList.push_back(schemes);
 }
 
-void Parser::parseIDList()
+void Parser::parseIDList(Stuff *stuff)
 {
     //cout << "in ParseIDList" << endl;
-    if(tokens.at(position)->getType() == TokenType::COMMA)
+    if(tokensToParse.at(position)->getType() == TokenType::COMMA)
     {
         ++position;
-        if(tokens.at(position)->getType() == TokenType::ID)
+        if(tokensToParse.at(position)->getType() == TokenType::ID)
         {
+            // put the id in stuff
+            stuff->addID(tokensToParse.at(position)->getOutput());
+            stuff->addParameter(tokensToParse.at(position)->getOutput());
             ++position;
-            parseIDList();
+            parseIDList(stuff);
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
@@ -218,11 +294,17 @@ void Parser::parseIDList()
 
 void Parser::parseSchemeList()
 {
-
-    parseScheme();
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
-        parseSchemeList();
+        parseScheme();
+        if(tokensToParse.at(position)->getType() == TokenType::ID)
+        {
+            parseSchemeList();
+        }
+        else
+        {
+            return;
+        }
     }
     else
     {
@@ -232,10 +314,17 @@ void Parser::parseSchemeList()
 
 void Parser::parseFactList()
 {
-    parseFact();
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
-        parseFactList();
+        parseFact();
+        if(tokensToParse.at(position)->getType() == TokenType::ID)
+        {
+            parseFactList();
+        }
+        else
+        {
+            return;
+        }
     }
     else
     {
@@ -245,63 +334,71 @@ void Parser::parseFactList()
 
 void Parser::parseFact()
 {
-    if(tokens.at(position)->getType() == TokenType::ID)
+    Facts* fact = new Facts();
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
+        fact->setName(tokensToParse.at(position)->getOutput());
         ++position;
-        if(tokens.at(position)->getType() == TokenType::LEFT_PAREN)
+        if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
         {
             ++position;
-            if(tokens.at(position)->getType() == TokenType::STRING)
+            if(tokensToParse.at(position)->getType() == TokenType::STRING)
             {
+                fact->addString(tokensToParse.at(position)->getOutput());
                 ++position;
-                parseStringList();
+                parseStringList(fact);
                 //cout << tokens.at(position)->toString() << endl;
-                if(tokens.at(position)->getType() == TokenType::RIGHT_PAREN)
+                if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
                 {
                     ++position;
-                    if(tokens.at(position)->getType() == TokenType::PERIOD)
+                    if(tokensToParse.at(position)->getType() == TokenType::PERIOD)
                     {
+                        setDomain(fact->getStringList());
                         ++position;
-                        return;
+                        ++numFacts;
                     }
                     else
                     {
-                        throw tokens.at(position);
+                        throw tokensToParse.at(position);
                     }
                 }
                 else
                 {
-                    throw tokens.at(position);
+                    throw tokensToParse.at(position);
                 }
             }
             else
             {
-                throw tokens.at(position);
+                throw tokensToParse.at(position);
             }
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
+    fact->setNumFacts(numFacts);
+    factList.push_back(fact);
 }
-void Parser::parseStringList()
+
+void Parser::parseStringList(Stuff *stuff)
 {
-    if(tokens.at(position)->getType() == TokenType::COMMA)
+    if(tokensToParse.at(position)->getType() == TokenType::COMMA)
     {
         ++position;
-        if(tokens.at(position)->getType() == TokenType::STRING)
+        if(tokensToParse.at(position)->getType() == TokenType::STRING)
         {
+            stuff->addString(tokensToParse.at(position)->getOutput());
             ++position;
-            parseStringList();
+            parseStringList(stuff);
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
@@ -312,10 +409,17 @@ void Parser::parseStringList()
 
 void Parser::parseRuleList()
 {
-    parseRule();
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
-        parseRuleList();
+        parseRule();
+        if(tokensToParse.at(position)->getType() == TokenType::ID)
+        {
+            parseRuleList();
+        }
+        else
+        {
+            return;
+        }
     }
     else
     {
@@ -325,35 +429,51 @@ void Parser::parseRuleList()
 
 void Parser::parseRule()
 {
-    parseHeadPredicate();
-    if(tokens.at(position)->getType() == TokenType::COLON_DASH)
+    Rules* rule = new Rules();
+    rule->setHeadPredicate(parseHeadPredicate());
+
+    if(tokensToParse.at(position)->getType() == TokenType::COLON_DASH)
     {
         ++position;
-        parsePredicate();
-        parsePredicateList();
-        if(tokens.at(position)->getType() == TokenType::PERIOD)
+        // new Predicate
+        Predicate* predicate = new Predicate();
+        parsePredicate(predicate);
+        predicateList.push_back(predicate);
+        rule->addPredicate(predicate);
+
+        parsePredicateList(rule);
+
+        if(tokensToParse.at(position)->getType() == TokenType::PERIOD)
         {
             ++position;
-            return;
+            ++numRules;
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
+    rule->setNumRules(numRules);
+    rulesList.push_back(rule);
 }
 
-void Parser::parsePredicateList()
+void Parser::parsePredicateList(Rules *rule)
 {
-    if(tokens.at(position)->getType() == TokenType::COMMA)
+    if(tokensToParse.at(position)->getType() == TokenType::COMMA)
     {
         ++position;
-        parsePredicate();
-        parsePredicateList();
+        // new Predicate
+        Predicate* predicate = new Predicate();
+        parsePredicate(predicate);
+        predicateList.push_back(predicate);
+        rule->addPredicate(predicate);
+
+        // put that Predicate into the rule - can't do this right now
+        parsePredicateList(rule);
         return;
     }
     else
@@ -362,102 +482,110 @@ void Parser::parsePredicateList()
     }
 }
 
-void Parser::parseHeadPredicate()
+Predicate* Parser::parseHeadPredicate()
 {
-    if(tokens.at(position)->getType() == TokenType::ID)
+    Predicate* predicate = new Predicate();
+
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
+        predicate->setName(tokensToParse.at(position)->getOutput());
         ++position;
-        if(tokens.at(position)->getType() == TokenType::LEFT_PAREN)
+        if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
         {
             ++position;
-            if(tokens.at(position)->getType() == TokenType::ID)
+            if(tokensToParse.at(position)->getType() == TokenType::ID)
             {
+                predicate->addParameter(tokensToParse.at(position)->getOutput());
                 ++position;
-                parseIDList();
-                if(tokens.at(position)->getType() == TokenType::RIGHT_PAREN)
+                parseIDList(predicate);
+                if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
                 {
                     ++position;
-                    return;
                 }
                 else
                 {
-                    throw tokens.at(position);
+                    throw tokensToParse.at(position);
                 }
             }
             else
             {
-                throw tokens.at(position);
+                throw tokensToParse.at(position);
             }
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
+    predicateList.push_back(predicate);
+    return predicate;
 }
 
-void Parser::parsePredicate()
+void Parser::parsePredicate(Stuff *stuff)
 {
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
+        stuff->setName(tokensToParse.at(position)->getOutput());
         ++position;
-        if(tokens.at(position)->getType() == TokenType::LEFT_PAREN)
+        if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
         {
             ++position;
-            parseParameter();
-            parseParameterList();
-            if(tokens.at(position)->getType() == TokenType::RIGHT_PAREN)
+            parseParameter(stuff);
+            parseParameterList(stuff);
+            if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
             {
                 ++position;
                 return;
             }
             else
             {
-                throw tokens.at(position);
+                throw tokensToParse.at(position);
             }
 
         }
         else
         {
-            throw tokens.at(position);
+            throw tokensToParse.at(position);
         }
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
 }
 
-void Parser::parseParameter()
+void Parser::parseParameter(Stuff *stuff)
 {
-    if(tokens.at(position)->getType() == TokenType::STRING)
+    if(tokensToParse.at(position)->getType() == TokenType::STRING)
     {
+        stuff->addParameter(tokensToParse.at(position)->getOutput());
         ++position;
         return;
     }
-    else if(tokens.at(position)->getType() == TokenType::ID)
+    else if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
+        stuff->addParameter(tokensToParse.at(position)->getOutput());
         ++position;
         return;
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
 }
 
-void Parser::parseParameterList()
+void Parser::parseParameterList(Stuff *stuff)
 {
-    if(tokens.at(position)->getType() == TokenType::COMMA)
+    if(tokensToParse.at(position)->getType() == TokenType::COMMA)
     {
         ++position;
-        parseParameter();
+        parseParameter(stuff);
         //cout << "parseParameterList-->" << "Current token is: " << tokens.at(position) << endl;
-        parseParameterList();// might need to put this in an if ID
+        parseParameterList(stuff);// might need to put this in an if ID
 
         return;
     }
@@ -469,24 +597,27 @@ void Parser::parseParameterList()
 
 void Parser::parseQuery()
 {
-    parsePredicate();
-    if(tokens.at(position)->getType() == TokenType::Q_MARK)
+    Queries* queries = new Queries();
+    parsePredicate(queries);
+    if(tokensToParse.at(position)->getType() == TokenType::Q_MARK)
     {
         position++;
-        return;
+        numQueries++;
     }
     else
     {
-        throw tokens.at(position);
+        throw tokensToParse.at(position);
     }
+    queries->setNumQueries(numQueries);
+    queryList.push_back(queries);
 }
 
 void Parser::parseQueryList()
 {
-    if(tokens.at(position)->getType() == TokenType::ID)
+    if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
         parseQuery();
-        if(tokens.at(position)->getType() == TokenType::ID)
+        if(tokensToParse.at(position)->getType() == TokenType::ID)
         {
             parseQueryList();
         }
