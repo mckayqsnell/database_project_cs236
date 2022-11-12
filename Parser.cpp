@@ -39,6 +39,19 @@ Parser::Parser(vector<Token*> tokens_)
         }
     }
 
+    //project 3
+    database = new Database();
+}
+
+//Project 3
+Database* Parser::getDatabase()
+{
+    return database;
+}
+
+vector<Queries*> Parser::getQueries()
+{
+    return queryList;
 }
 
 Parser::~Parser()
@@ -57,7 +70,18 @@ Parser::~Parser()
     {
         delete query;
     }
-    //Todo: Delete fact and any other allocations for classes here
+
+    for(auto & rule : rulesList)
+    {
+        delete rule;
+    }
+
+    for(auto & predicate : predicateList)
+    {
+        delete predicate;
+    }
+
+    delete database; // project 3
 }
 
 string Parser::toString()
@@ -77,8 +101,6 @@ string Parser::toString()
     {
         ss << "  " << i->toString();
     }
-
-    //TODO:Rules
 
     //Predicates
     ss << "Rules(" << rulesList.size() << ")" << ":" << endl;
@@ -119,11 +141,17 @@ set<string> Parser::getDomain()
 
 void Parser::parse()
 {
+    //Project 2 print out
     if(parseDatalogProgram())
     {
-        cout << "Success!" << endl;
-        cout << toString();
+        //cout << "Success!" << endl;
+        //cout << toString();
     }
+
+    //Project 3
+    /*cout << endl;
+    cout << "Database: " << endl;
+    cout << database->toString(); */
 }
 
 bool Parser::parseDatalogProgram()
@@ -214,18 +242,21 @@ bool Parser::parseDatalogProgram()
         return pass;
     }
 
-    return false;
+    return false; // this was just kinda thrown in to fix it. Does not affect anything.
 }
 
 void Parser::parseScheme()
 {
     Schemes* schemes = new Schemes();
+    Relation* relation = new Relation();
 
     if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
         // put id in schemes name
         schemes->setName(tokensToParse.at(position)->getOutput());
-        //cout << "token at posistion: " << position << " is a " << tokens.at(position)->toString() << endl;
+        // put id in relation name
+        relation->setName(tokensToParse.at(position)->getOutput());
+        //cerr << "token at posistion: " << position << " is a " << tokens.at(position)->toString() << endl;
         ++position;
 
         if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
@@ -239,8 +270,23 @@ void Parser::parseScheme()
                 schemes->addID(tokensToParse.at(position)->getOutput());
                 ++position;
                 parseIDList(schemes);
+
+                //Project 3
+                Header header; //made this an object to make setHeader work.
+                header.addAttributeList(schemes->getIDList());
+                relation->setHeader(header);
+
                 if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
                 {
+                    //Project 3
+                    //cerr << "pushed back relation" << endl;
+                    database->addRelation(relation->getName(), relation);
+                    //cerr << "added relation to database" << endl;
+                    // TODO: ask dad the point of mapping
+                    //name to the relation when you already have the name of relation stored
+                    // also ask about joan using name mapped to header. (the big box row).
+
+
                     ++numSchemes;
                     ++position;
                 }
@@ -338,6 +384,19 @@ void Parser::parseFact()
     if(tokensToParse.at(position)->getType() == TokenType::ID)
     {
         fact->setName(tokensToParse.at(position)->getOutput());
+        //Project 3
+        try {
+            if(database->findRelation(fact->getName()) == nullptr)
+            {
+                string error = "Error: No scheme for fact " + fact->getName(); // can probably put this whole thing in a function call.
+                throw error;
+            }
+        }
+        catch (string error) {
+            cout << error << endl;
+            exit(1);
+        }
+
         ++position;
         if(tokensToParse.at(position)->getType() == TokenType::LEFT_PAREN)
         {
@@ -347,6 +406,9 @@ void Parser::parseFact()
                 fact->addString(tokensToParse.at(position)->getOutput());
                 ++position;
                 parseStringList(fact);
+                //Project 3
+                Tuple tuple(fact->getStringList());
+                database->findRelation(fact->getName())->addTuple(tuple);
                 //cout << tokens.at(position)->toString() << endl;
                 if(tokensToParse.at(position)->getType() == TokenType::RIGHT_PAREN)
                 {
@@ -610,6 +672,7 @@ void Parser::parseQuery()
     }
     queries->setNumQueries(numQueries);
     queryList.push_back(queries);
+    // Process the query
 }
 
 void Parser::parseQueryList()

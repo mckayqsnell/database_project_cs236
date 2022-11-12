@@ -1,5 +1,6 @@
 #include "Lexer.h"
 #include "Parser.h"
+#include "Interpreter.h"
 #include <iostream>
 #include <fstream>
 
@@ -23,7 +24,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    char ch; //could use a string stream instead? Dylan mentioned it could be inefficent with a big file? we'll see?
+    char ch; // if it gets mad for being slow trying changing this to s stringstream instead
     string inputString;
     while (input.get(ch))
     {
@@ -31,12 +32,21 @@ int main(int argc, char** argv) {
     }
 
     //cout << "FiletoString: " << inputString << endl;
+
+    //Project 1
     lexer->Run(inputString);
+
+    //Project 2
     Parser* parser = new Parser(lexer->getTokens());
     parser->parse();
 
+    //Project 3
+    Interpreter* interpreter = new Interpreter(parser->getDatabase(), parser->getQueries());
+    interpreter->evaluateQueries();
+
     delete lexer;
     delete parser;
+    delete interpreter;
 
     return 0;
 }

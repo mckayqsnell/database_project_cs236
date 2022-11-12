@@ -10,6 +10,10 @@
 #include <vector>
 #include <set>
 
+// Project 3 includes...
+#include "Database.h"
+#include "Relation.h"
+
 class Parser {
 
 private:
@@ -26,6 +30,9 @@ private:
     int numFacts;
     int numQueries;
     int numRules;
+
+    //Project 3
+    Database* database;
 
 public:
     explicit Parser(vector<Token*> tokens_);
@@ -50,6 +57,10 @@ public:
     void parseQueryList();
     void setDomain(vector<string> string_list);
     set<string> getDomain();
+
+    //project 3
+    Database* getDatabase();
+    vector<Queries*> getQueries();
 };
 
 

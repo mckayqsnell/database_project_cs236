@@ -1,6 +1,4 @@
 #include "BlockCommentAutomaton.h"
-//TODO: BLOCKCOMMENT... Maybe try loading up the characters into a string as you go then when it hits the error state
-//send that entire string to Undefined?
 void BlockCommentAutomaton::S0(const std::string& input) {
     if (input[index] == '#') {
         inputRead = 1;

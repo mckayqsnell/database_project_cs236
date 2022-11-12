@@ -29,7 +29,7 @@ string Queries::toString()
             ss << ",";
         }
     }
-    ss << ")?" << endl;
+    ss << ")?";
     return ss.str();
 }
 

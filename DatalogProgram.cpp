@@ -7,8 +7,9 @@ using namespace std;
 
 DatalogProgram::DatalogProgram()
 {
-    tmp = "Greetings from DatalogProgram class";
+
 }
+
 DatalogProgram::~DatalogProgram()
 {
 
