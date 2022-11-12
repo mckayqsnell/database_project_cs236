@@ -22,11 +22,9 @@ enum class TokenType {
     EndOfFile,
     ID,
     BLOCKCOMMENT,
-    //UD_BLOCK_COMMENT
     STRING,
     UD_STRING,
     UD_BLOCK_C,
-    // TODO: add the other types of tokens
     UNDEFINED
 };
 
