@@ -22,6 +22,16 @@ public:
     void addAttributeList(vector<string> attributeList);
     vector<string> getAttributes();
     unsigned int getAttributeIndex(string attribute);
+
+    //Project 4
+    bool operator==(const Header h) const {
+        return attributes == h.attributes;
+    }
+    //combine headers for natural join
+    Header combineHeaders(Header otherHeader);
+    // contains attribute
+    bool containsAttribute(string attribute);
+
 private:
     vector<string> attributes;
 

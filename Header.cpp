@@ -64,3 +64,36 @@ unsigned int Header::getAttributeIndex(string attribute)
     throw "Header : Attribute not found!";
 }
 
+//Project 4
+Header Header::combineHeaders(Header otherHeader)
+{
+    //combine the two headers, no duplicates
+    Header combinedHeader;
+    for(string attribute : attributes)
+    {
+        combinedHeader.addAttribute(attribute);
+    }
+    for(string attribute : otherHeader.getAttributes())
+    {
+        if(!combinedHeader.containsAttribute(attribute))
+        {
+            combinedHeader.addAttribute(attribute);
+        }
+    }
+
+    return combinedHeader;
+}
+
+// contains attribute
+bool Header::containsAttribute(string attribute)
+{
+    for(string s : attributes)
+    {
+        if(s == attribute)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+

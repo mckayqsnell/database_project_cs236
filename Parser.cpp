@@ -54,6 +54,11 @@ vector<Queries*> Parser::getQueries()
     return queryList;
 }
 
+vector<Rules*> Parser::getRules()
+{
+    return rulesList;
+}
+
 Parser::~Parser()
 {
     for(auto & scheme : schemesList)
