@@ -24,6 +24,15 @@ public:
     string getValue(unsigned int index);
     unsigned int getSize();
 
+    //Project 4
+    vector<string> getValues() { return values; }
+    bool operator==(const Tuple t) const {
+        return values == t.values;
+    }
+
+    bool canJoin(Tuple otherTuple, Header header1, Header header2);
+    Tuple combineTuples(Tuple otherTuple, Header header1, Header header2);
+
 private:
     vector<string> values;
 

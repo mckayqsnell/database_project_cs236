@@ -160,38 +160,90 @@ Relation* Relation::project(vector<unsigned int> columns_to_keep) {
     return newRelation;
 }
 
-Relation* Relation::project(vector<string> columns_to_keep)
+Relation* Relation::naturalJoin(Relation* otherRelation)
 {
-    Relation* newRelation = new Relation(); // new empty relation
-    // {3,2}
-    // Name
-    newRelation->setName(name);
-    // create a new header(empty)
+    //make the header h for the result relation
+    //(combine r1's header with r2's header)
     Header newHeader = Header();
+    newHeader = header.combineHeaders(otherRelation->getHeader());
+    //cout << "newHeader: " << newHeader.toString() << endl;
 
-    // fill the new header with the attributes we want to keep
-    // {A, B, C, D} -> {D, C}
-    for(string colName : columns_to_keep)
-    {
-        newHeader.addAttribute(colName);
-    }
-    // put the new header in the new relation
+    //make a new empty relation r using header h
+    Relation* newRelation = new Relation();
     newRelation->setHeader(newHeader);
+    newRelation->setName(name + otherRelation->getName()); // shouldn't matter
 
-    // for each tuple t
-    for(Tuple t : tuples)
+    //for each tuple t1 in r1
+    for(Tuple t1 : tuples)
     {
-        // new empty tuple
-        Tuple newTuple = Tuple();
-        //fill that tuple with reorganized values
-        // (1, 2, 3, 4) -> (4, 3)
-        for(string colName : columns_to_keep)
+        //for each tuple t2 in r2
+        for(Tuple t2 : otherRelation->getTuples())
         {
-            newTuple.addValue(t.getValue(header.getAttributeIndex(colName)));
-            cerr << "getting the value of " << colName << " from " << header.getAttributeIndex(colName) << endl;
+            //if t1 and t2 can join
+            if(t1.canJoin(t2, header, otherRelation->getHeader()))
+            {
+                //join t1 and t2 to make tuple t
+                Tuple newTuple = t1.combineTuples(t2, header, otherRelation->getHeader());
+                //add tuple t to relation r
+                //cout << "From naturalJoin: " << newHeader.toString() << endl;
+                //cout << "From naturalJoin: " << newTuple.toString(newHeader) << endl;
+                newRelation->addTuple(newTuple);
+            }
         }
-        // add that tuple to the new relation
-        newRelation->addTuple(newTuple);
     }
+
     return newRelation;
+}
+
+//Unionize
+Relation* Relation::unionize(Relation* old_relation, Relation* new_relation)
+{
+    /*cout << "Unionizing " << old_relation->getName() << " and " << new_relation->getName() << endl;
+    cout << "Old Relation: " << endl;
+    cout << old_relation->toString() << endl;
+    cout << "New Relation: " << endl;
+    cout << new_relation->toString() << endl; */
+
+    //make a new empty relation r using header h
+    Relation* newRelation = new Relation();
+    newRelation->setHeader(old_relation->getHeader());
+    newRelation->setName(old_relation->getName()); // shouldn't matter
+
+    // add all the tuples from the old relation
+    for(Tuple t : old_relation->getTuples())
+    {
+        newRelation->addTuple(t);
+    }
+    // add all the tuples from the new relation, if they don't already exist
+    for(Tuple t : new_relation->getTuples())
+    {
+        if(!newRelation->findTuple(t))
+        {
+            newRelation->addTuple(t);
+            cout << t.toString(header) << endl;
+        }
+    }
+
+    return newRelation;
+}
+
+// Replace the current relation with the new relation(for unionize)
+void Relation::replaceRelation(Relation* newRelation)
+{
+    name = newRelation->getName();
+    header = newRelation->getHeader();
+    tuples = newRelation->getTuples();
+}
+
+// Find a tuple in the relation
+bool Relation::findTuple(Tuple t)
+{
+    for(Tuple tuple : tuples)
+    {
+        if(tuple == t)
+        {
+            return true;
+        }
+    }
+    return false;
 }

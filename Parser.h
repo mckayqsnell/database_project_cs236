@@ -61,6 +61,9 @@ public:
     //project 3
     Database* getDatabase();
     vector<Queries*> getQueries();
+
+    //project 4
+    vector<Rules*> getRules();
 };
 
 

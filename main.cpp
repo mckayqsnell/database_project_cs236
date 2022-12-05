@@ -41,7 +41,10 @@ int main(int argc, char** argv) {
     parser->parse();
 
     //Project 3
-    Interpreter* interpreter = new Interpreter(parser->getDatabase(), parser->getQueries());
+    Interpreter* interpreter = new Interpreter(parser->getDatabase(), parser->getQueries(), parser->getRules());
+    //Project 4
+    interpreter->evaluateRules();
+    //Project 3
     interpreter->evaluateQueries();
 
     delete lexer;
