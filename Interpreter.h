@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <deque>
+#include "Graph.h"
 
 using namespace std;
 
@@ -18,13 +19,16 @@ public:
     Interpreter(Database* database, vector<Queries*> queries, vector<Rules*> rules);
     ~Interpreter();
     void evaluateQueries();
-    void evaluateRules();
+    void evaluateRules(vector<Rules*> rules_to_evaluate, set<int> sccs);
     deque<Relation*> evaluatePredicates(Rules* rule);
-    //string toString(); // not sure if I need this, just turned it off to pass off because it wasn't needed
+    void rulesOptimization();
+    bool detectSelfLoop(Rules* rule);
 private:
     Database* database;
     vector<Queries*> query_list;
     vector<Rules*> rule_list;
+    Graph* graph;
+    Graph* reverseGraph;
 };
 
 

@@ -43,7 +43,9 @@ int main(int argc, char** argv) {
     //Project 3
     Interpreter* interpreter = new Interpreter(parser->getDatabase(), parser->getQueries(), parser->getRules());
     //Project 4
-    interpreter->evaluateRules();
+    //interpreter->evaluateRules();
+    //Project 5
+    interpreter->rulesOptimization();
     //Project 3
     interpreter->evaluateQueries();
 

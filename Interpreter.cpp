@@ -69,15 +69,14 @@ void Interpreter::evaluateQueries()
     }
 }
 
-void Interpreter:: evaluateRules() // Fix this
+void Interpreter:: evaluateRules(vector<Rules*> rules_to_evaluate, set<int> sccs) // Fix this
 {
     bool changed = true;
-    int count = 0; // will need this later
-    cout << "Rule Evaluation" << endl;
+    int count = 0;
     while(changed)
     {
         changed = false;
-        for(Rules* rule : rule_list)
+        for(Rules* rule : rules_to_evaluate) // Changing this to operate off of a list of rules I give it from the parameter
         {
             deque<Relation*> predicate_relations = evaluatePredicates(rule);
             //Natural Join the relations in the deque using deque methods
@@ -134,16 +133,34 @@ void Interpreter:: evaluateRules() // Fix this
             if(unionized_relation->getSize() > old_relation->getSize())
             {
                 changed = true;
+
                 //cout << "CHANGED" << endl;
             }
             // now the unionized relation is the new relation in the database
             // so we need to replace the old relation with the new one
             old_relation->replaceRelation(unionized_relation);
         }
+        //if there is only one rule in the list, and it doesn't have a self loop, then we need to break out of the loop
+        if(rules_to_evaluate.size() == 1)
+        {
+            if(!detectSelfLoop(rules_to_evaluate.at(0)))
+            {
+                changed = false;
+            }
+        }
         ++count;
     }
-    cout << endl;
-    cout << "Schemes populated after " << count << " passes through the Rules." << endl;
+    //cout << endl;
+    cout << count << " passes: ";
+    for(int i : sccs)
+    {
+        cout << "R" << i;
+        //place a comma if it isn't the last element
+        if(i != *sccs.rbegin())
+        {
+            cout << ",";
+        }
+    }
     cout << endl;
 }
 
@@ -187,4 +204,94 @@ deque<Relation*> Interpreter::evaluatePredicates(Rules* rule)
         predicate_relations.push_back(relation);
     }
     return predicate_relations;
+}
+
+//Project 5
+void Interpreter::rulesOptimization()
+{
+    //Build the dependency graph and the reverse dependency graph
+    graph = new Graph(rule_list.size());
+    reverseGraph = new Graph(rule_list.size());
+    for(unsigned int i = 0; i < rule_list.size(); i++)
+    {
+        for(Predicate* predicate : rule_list.at(i)->getPredicateList())
+        {
+            for(unsigned int j = 0; j < rule_list.size(); j++)
+            {
+                if(predicate->getName() == rule_list.at(j)->getHeadPredicate()->getName())
+                {
+                    graph->addEdge(i, j);
+                    reverseGraph->addEdge(j, i);
+                }
+            }
+        }
+    }
+    cout << "Dependency Graph" << endl;
+    cout << graph->toString() << endl;
+    cout << "Reverse Dependency Graph" << endl;
+    cout << reverseGraph->toString() << endl << endl;
+
+    //Run DFS-Forest (in regular numeric order) on the reverse dependency graph to get the post-order
+    reverseGraph->dfs_Forest();
+    vector<unsigned int> post_order = reverseGraph->getPostOrder();
+    for(auto i : post_order)
+    {
+        cout << i;
+        if(i != post_order.back())
+        {
+            cout << ","; // Guess this works
+        }
+    }
+    cout << endl << endl;
+    //Run DFS-Forest (in reverse post-order) on the forward dependency graph to find the strongly connected components
+    graph->dfs_Forest_Reverse(post_order);
+    vector<set<int>> strongly_connected_components = graph->getSCCs();
+    cout << "Rule Evaluation" << endl;
+    /*for(auto scc : strongly_connected_components)
+    {
+        cout << "SCC: ";
+        for(auto i : scc)
+        {
+            cout <<"R"<< i;
+            if(i != *scc.rbegin())
+            {
+                cout << ",";
+            }
+        }
+        cout << endl;
+    } */
+    //Evaluate the rules in each component
+    //Look up the rules in the rule list using the indices in the strongly connected components
+    //and store them in a vector called rules_to_evaluate
+    for(auto scc : strongly_connected_components)
+    {
+        vector<Rules*> rules_to_evaluate;
+        for(auto i : scc)
+        {
+            rules_to_evaluate.push_back(rule_list.at(i));
+        }
+        cout << "SCC: ";
+        for(auto i : scc)
+        {
+            cout <<"R"<< i;
+            if(i != *scc.rbegin())
+            {
+                cout << ",";
+            }
+        }
+        cout << endl;
+        evaluateRules(rules_to_evaluate, scc);
+    }
+    cout << endl;
+}
+
+bool Interpreter::detectSelfLoop(Rules* rule) {
+    for(Predicate* predicate : rule->getPredicateList())
+    {
+        if(predicate->getName() == rule->getHeadPredicate()->getName())
+        {
+            return true;
+        }
+    }
+    return false;
 }
