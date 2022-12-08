@@ -9,7 +9,8 @@ Interpreter::Interpreter(Database* database, vector<Queries*> queries, vector<Ru
 
 Interpreter::~Interpreter()
 {
-
+    delete graph;
+    delete reverseGraph;
 }
 
 void Interpreter::evaluateQueries()
@@ -227,14 +228,14 @@ void Interpreter::rulesOptimization()
         }
     }
     cout << "Dependency Graph" << endl;
-    cout << graph->toString() << endl;
-    cout << "Reverse Dependency Graph" << endl;
-    cout << reverseGraph->toString() << endl << endl;
+    cout << graph->toString();
+    //cout << "Reverse Dependency Graph" << endl;
+    //cout << reverseGraph->toString() << endl << endl;
 
     //Run DFS-Forest (in regular numeric order) on the reverse dependency graph to get the post-order
     reverseGraph->dfs_Forest();
     vector<unsigned int> post_order = reverseGraph->getPostOrder();
-    for(auto i : post_order)
+    /*for(auto i : post_order)
     {
         cout << i;
         if(i != post_order.back())
@@ -242,7 +243,7 @@ void Interpreter::rulesOptimization()
             cout << ","; // Guess this works
         }
     }
-    cout << endl << endl;
+    cout << endl << endl; */
     //Run DFS-Forest (in reverse post-order) on the forward dependency graph to find the strongly connected components
     graph->dfs_Forest_Reverse(post_order);
     vector<set<int>> strongly_connected_components = graph->getSCCs();

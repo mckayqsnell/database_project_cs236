@@ -109,15 +109,15 @@ void Graph::dfs_Forest_Reverse(vector<unsigned int> post_order)
     }
     // you will need to reverse the post order list
     reverse(post_order.begin(), post_order.end()); // Double check if this edits the orginal postOrder
-    cout << "DFS-FOREST-REVERSE" << "Post order after reverse: ";
-    for(auto i : post_order)
+    //cout << "DFS-FOREST-REVERSE" << "Post order after reverse: ";
+    /*for(auto i : post_order)
     {
         cout << i;
         if(i != *post_order.rbegin())
         {
             cout << ",";
         }
-    }
+    } */
     cout << endl;
     //for each Node N in PostOrder:
     for(auto & it : post_order)
