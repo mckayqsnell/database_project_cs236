@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="project1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="project1">
+				<Option output="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/project1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/mckaysnell/cs236/project1-cs236/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/13.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 project1"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="project1/fast">
+				<Option output="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/project1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/mckaysnell/cs236/project1-cs236/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/13.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 project1/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/mckaysnell/cs236/project1-cs236/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/AddAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/AddAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Automaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/BlockCommentAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/BlockCommentAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/ColonAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/ColonAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/ColonDashAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/ColonDashAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/CommaAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/CommaAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Database.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Database.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/DatalogProgram.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/DatalogProgram.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/EndOfFileAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/EndOfFileAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Facts.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Facts.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/FactsAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/FactsAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Graph.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Graph.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Header.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Header.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/IDAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/IDAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Interpreter.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Interpreter.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/LeftParenAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/LeftParenAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Lexer.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Lexer.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/LineCommentAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/LineCommentAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/MultiplyAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/MultiplyAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Node.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Node.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Parser.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Parser.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/PeriodAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/PeriodAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Predicate.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Predicate.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Queries.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Queries.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/QueriesAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/QueriesAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/QuestionMarkAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/QuestionMarkAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Relation.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Relation.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/RightParenAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/RightParenAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Rules.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Rules.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/RulesAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/RulesAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Schemes.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Schemes.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/SchemesAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/SchemesAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/StringAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/StringAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Stuff.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Stuff.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Token.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Token.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Tuple.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/Tuple.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UDBlockCommentAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UDBlockCommentAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UDStringAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UDStringAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UndefinedAutomaton.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/UndefinedAutomaton.h">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/main.cpp">
+			<Option target="project1"/>
+		</Unit>
+		<Unit filename="/Users/mckaysnell/cs236/project1-cs236/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
